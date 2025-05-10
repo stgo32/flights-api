@@ -3,14 +3,19 @@ import Router from 'koa-router';
 import { connectDB } from './db/config';
 import bodyParser from 'koa-bodyparser';
 import flightRoutes from './routes/flightRoutes';
+import passengerRoutes from './routes/passengerRoutes';
 
 
 connectDB();
 const app = new Koa();
 const router = new Router();
+
 app.use(bodyParser());
 app.use(flightRoutes.routes());
+app.use(passengerRoutes.routes());
+
 app.use(flightRoutes.allowedMethods());
+app.use(passengerRoutes.allowedMethods());
 
 router.get('/', async (ctx) => {
   ctx.body = { message: 'Hello World!' };

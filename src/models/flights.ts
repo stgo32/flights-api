@@ -1,7 +1,6 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import mongoose, { Schema, Document, Types } from 'mongoose';
 
-interface Passenger {
-  id: number;
+export interface Passenger {
   name: string;
   hasConnections: boolean;
   age: number;
@@ -10,14 +9,17 @@ interface Passenger {
   hasCheckedBaggage: boolean;
 }
 
-export interface FlightDocument extends Document {
-  flightCode: string;
-  passengers: Passenger[];
+export interface PassengerSubdocument extends Passenger {
+  _id: Types.ObjectId;
 }
 
-const passengerSchema = new Schema<Passenger>(
+export interface FlightDocument extends Document {
+  flightCode: string;
+  passengers: PassengerSubdocument[];
+}
+
+const passengerSchema = new Schema<PassengerSubdocument>(
   {
-    id: { type: Number, required: true },
     name: { type: String, required: true },
     hasConnections: { type: Boolean, required: true },
     age: { type: Number, required: true },
@@ -29,7 +31,7 @@ const passengerSchema = new Schema<Passenger>(
     reservationId: { type: String, required: true },
     hasCheckedBaggage: { type: Boolean, required: true },
   },
-  { _id: false }
+  { _id: true }
 );
 
 const flightSchema = new Schema<FlightDocument>(
