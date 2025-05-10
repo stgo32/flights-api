@@ -56,7 +56,8 @@ router.delete('/:id', async (ctx: Context) => {
     ctx.body = { error: 'Flight not found' };
     return;
   }
-  ctx.status = 204;
+  ctx.status = 200;
+  ctx.body = { message: 'Flight deleted successfully' };
 });
 
 export default router;
