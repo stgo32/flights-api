@@ -57,7 +57,7 @@ The API will be available at `http://localhost:3000` after starting the Docker c
   }
   ```
 
-- Update a flight: PUT** `/flights/:id`
+- Update a flight: **PUT** `/flights/:id`
     - Body: Partial flight data to update.
 
 - Delete a flight: **DELETE** `/flights/:id`
