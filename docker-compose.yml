@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin123
+    volumes:
+      - mongo-data:/data/db
+
+  api:
+    build: .
+    container_name: koa-api
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongodb
+    environment:
+      MONGO_URI: mongodb://admin:admin123@mongodb:27017/?authSource=admin
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: npm run dev
+
+volumes:
+  mongo-data:
